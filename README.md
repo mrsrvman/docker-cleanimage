@@ -12,6 +12,21 @@ ENV CLEANIMAGE_URL https://raw.githubusercontent.com/LolHens/docker-cleanimage/$
 ADD ["$CLEANIMAGE_URL", "/usr/local/bin/"]
 RUN chmod +x "/usr/local/bin/cleanimage"
 ```
+OR
+```
+RUN wget https://raw.githubusercontent.com/mrsrvman/docker-cleanimage/master/cleanimage -O /usr/local/bin//cleanimage \
+    && chmod +x /usr/local/bin/cleanimage
+```
+OR
+```
+FROM debian:buster-slim AS cleaner
+RUN apt-get update \
+    && apt-get install --assume-yes --no-install-recommends --no-install-suggests  curl ca-certificates \
+    && curl https://raw.githubusercontent.com/mrsrvman/docker-cleanimage/master/cleanimage -o /usr/local/bin//cleanimage \
+    && chmod +x /usr/local/bin/cleanimage
+.......
+COPY --from=cleaner /usr/local/bin/cleanimage /usr/local/bin/cleanimage
+```
 
 ### Execute after each layer where necessary
 ```Dockerfile
