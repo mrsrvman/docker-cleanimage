@@ -27,6 +27,12 @@ RUN apt-get update \
 .......
 COPY --from=cleaner /usr/local/bin/cleanimage /usr/local/bin/cleanimage
 ```
+OR
+
+``` In Dockerfile
+FROM mrsrvman/docker-cleanimage:latest AS cleaner
+COPY --from=cleaner /usr/local/bin/cleanimage /usr/local/bin/cleanimage
+```
 
 ### Execute after each layer where necessary
 ```Dockerfile
